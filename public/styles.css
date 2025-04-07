@@ -1,0 +1,45 @@
+﻿@font-face{
+	font-family: fontLight;
+	src: url('fonts/font1.ttf');
+}
+
+@font-face{
+	font-family: fontRegular;
+	src: url('fonts/CreatoDisplay-RegularItalic.otf')
+}
+
+@font-face{
+	font-family: fontBoldItalic;
+	src: url('fonts/CreatoDisplay-BoldItalic.otf')
+}
+
+body{
+	background-color: white;
+	font-family: fontRegular;
+	margin-top: 180px;
+}
+
+table {
+	width: 80%;
+	margin: 20px auto;
+	border-collapse: collapse;
+	border: 1px solid #ddd;
+}
+
+th, td {
+	padding: 12px;
+	text-align: left;
+	border: 1px solid #ddd;
+}
+
+th {
+	background-color: palegoldenrod;
+}
+
+tr:hover {
+	background-color: #f1f1f1;
+}
+
+.container {
+	text-align: center;
+}

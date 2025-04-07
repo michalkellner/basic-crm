@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Customer Information</h2>
+        <!-- Table of customers data: -->
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated here by JavaScript-->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // fetch customer data from customers table of database
+        const data = [
+            {"id":1,"name":"Courtney","email":"courtney@gmail.com","created_at":"2025-04-07T10:26:15.000Z"},
+            {"id":2,"name":"Bob","email":"bob@gmail.com","created_at":"2025-04-07T10:30:49.000Z"},
+            {"id":3,"name":"Alice","email":"alice@gmail.com","created_at":"2025-04-07T11:15:12.000Z"}];
+        
+        function populateTable(){
+            const tableBody = document.querySelector('#userTable tbody');
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.email}</td>
+                    <td>${new Date(item.created_at).toLocaleString()}</td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+        window.onload = populateTable;
+    </script>
+</body>
+</html>
