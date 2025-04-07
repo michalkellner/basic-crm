@@ -5,7 +5,8 @@ var app = expressPackage();
 var exphbs = require("express-handlebars");
 
 var path = require("path");
-
+const cors = require('cors');
+app.use(cors());
 app.use(expressPackage.urlencoded({extended: true}));
 app.use(expressPackage.json());
 
