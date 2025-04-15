@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    {{>main}}
+    <div class="container">
+        <h2>Product Information</h2>
+        <!-- Table of customers data: -->
+        <table id="productTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Inventory</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Table rows will be populated here by JavaScript-->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        function populateTable(){
+            const tableBody = document.querySelector('#productTable tbody');
+        
+        // fetch customer data from customers table of database
+        fetch('http://localhost:8080/products')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+
+                    row.innerHTML = `
+                        <td>${item.product_id}</td>
+                        <td>${item.product_name}</td>
+                        <td>${item.price}</td>
+                        <td>${item.inventory}</td>
+                        <td>${item.description}</td>
+                    `;
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error =>{
+                console.error('Error fetching data:', error);
+            });
+        }
+        window.onload = populateTable;
+    </script>
+    {{>footer}}
+</body>
+</html>

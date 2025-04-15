@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+	<body>
+		{{> main}}
+		<div class="new-item-container">
+			<div class="new-item-title">Add a new transaction:</div>
+			<form id="transactionForm">
+				<label for="productSearch">Product Search:</label>
+				<input type="text" id="productSearch" placeholder="ID or Name">
+				<button type="button" onclick="searchProduct()">Search Product</button>
+				<br>
+				<label for="productSelect">Select Product:</label>
+				<select id="productSelect" name="product_id" required></select>
+				<br><br>
+
+				<label for="customerSearch">Customer Search:</label>
+				<input type="text" id="customerSearch" placeholder="Name or Email">
+				<button type="button" onclick="searchCustomer()">Search Customer</button>
+				<br>
+				<label for="customerSelect">Select Customer:</label>
+				<select id="customerSelect" name="customer_id" required></select>
+				<br><br>
+
+				<label for="quantity">Quantity:</label>
+				<input type="number" name="quantity" min="1" value="1" required>
+
+				<br><br>
+				<button type="submit">Log Transaction</button>
+			</form>
+
+			<div id="submitted">{{submitted}}</div>
+		</div>
+		{{> footer}}
+	</body>
+</html>
+<script>
+  async function searchProduct() {
+    const query = document.getElementById('productSearch').value;
+    if (!query) return;
+
+    const res = await fetch(`/api/products?query=${encodeURIComponent(query)}`);
+    const products = await res.json();
+
+    const select = document.getElementById('productSelect');
+    select.innerHTML = '';
+    products.forEach(p => {
+      const option = document.createElement('option');
+      option.value = p.product_id;
+      option.text = `${p.product_name} (ID: ${p.product_id})`;
+      select.appendChild(option);
+    });
+  }
+
+  async function searchCustomer() {
+    const query = document.getElementById('customerSearch').value;
+    if (!query) return;
+
+    const res = await fetch(`/api/customers?query=${encodeURIComponent(query)}`);
+    const customers = await res.json();
+
+    const select = document.getElementById('customerSelect');
+    select.innerHTML = '';
+    customers.forEach(c => {
+      const option = document.createElement('option');
+      option.value = c.id;
+      option.text = `${c.name} (${c.email})`;
+      select.appendChild(option);
+    });
+  }
+
+  document.getElementById('transactionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new URLSearchParams(new FormData(e.target));
+
+	for (const [key, value] of data.entries()){
+		console.log(`${key}: ${value}`);
+	}
+
+	console.log('Sending:', [...data.entries()]);
+
+    const res = await fetch('/transactions', {
+      method: 'POST',
+	  headers: {
+		'Content-Type': 'application/x-www-form-urlencoded'
+	  },
+      body: data
+    });
+
+    const msg = await res.text();
+    alert(msg);
+  });
+</script>

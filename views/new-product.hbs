@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<body>
+		{{> main}}
+		<div class="new-item-container">
+			<div class="new-item-title">Add a new product:</div>
+			<form class="new-product-form" id="new-product-form" action="/new-product" method="POST">
+				<div class="new-item-label">Product Name</div>
+				<input type="text" id="name" name="name">
+				<div class="new-item-label">Price</div>
+				<input type="text" id="price" name="price">
+				<div class="new-item-label">Inventory</div>
+				<input type="text" id="inventory" name="inventory">
+				<div class="new-item-label">Description</div>
+				<input type="text" id="description" name="description">
+				<input type="submit" value="Submit">
+			</form>
+			<div id="new-product-confirmation"> Product added to database.</div>
+			<div id="submitted">{{submitted}}</div>
+		</div>
+		{{> footer}}
+	</body>
+</html>
+<script>
+	console.log(document.getElementById("submitted").innerHTML);
+	var submitted = document.getElementById("submitted").innerHTML;
+	var newProductForm = document.getElementById("new-product-form");
+	var newProductConfirmation = document.getElementById("new-product-confirmation");
+	if(submitted == "yes"){
+		newProductForm.style.display = "none";
+		newProductConfirmation.style.display = "block";
+	}
+	else {
+		newProductConfirmation.style.display = "none";
+	}
+</script>
